@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "pg": "^7.12.1",
     "sequelize": "^5.19.1"
   },
   "scripts": {
@@ -18,6 +20,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "nodemon": "^1.19.3",
     "prettier": "^1.18.2",
+    "sequelize-cli": "^5.5.1",
     "sucrase": "^3.10.1"
   }
 }
