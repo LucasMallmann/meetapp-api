@@ -1,5 +1,11 @@
+import 'dotenv/config';
 import express from 'express';
 import routes from './routes';
+
+/**
+ * Loads database initialization
+ */
+import './database';
 
 class App {
   constructor() {
