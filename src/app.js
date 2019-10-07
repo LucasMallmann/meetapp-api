@@ -2,12 +2,13 @@ import 'dotenv/config';
 import Youch from 'youch';
 import 'express-async-errors';
 import express from 'express';
-import routes from './routes';
 
 /**
  * Loads database initialization
  */
 import './database';
+
+import routes from './routes';
 
 class App {
   constructor() {
@@ -27,7 +28,6 @@ class App {
 
   exception() {
     this.server.use(async (err, req, res, next) => {
-      console.log('FUUUUUUUUUUUUUUARCK');
       const errors = await new Youch(err, req).toJSON();
       return res.status(500).json(errors);
     });

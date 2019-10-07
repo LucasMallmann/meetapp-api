@@ -9,7 +9,7 @@ class MeetupController {
       description: Yup.string().required(),
       location: Yup.string().required(),
       date: Yup.date().required(),
-      wallpaper_id: Yup.number().required(),
+      file_id: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body))) {

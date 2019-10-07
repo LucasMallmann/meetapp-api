@@ -2,13 +2,13 @@ import Sequelize, { Model } from 'sequelize';
 import { isBefore } from 'date-fns';
 
 class Meetup extends Model {
-  static init(connection) {
+  static init(sequelize) {
     super.init(
       {
         title: Sequelize.STRING,
         description: Sequelize.STRING,
-        date: Sequelize.DATE,
         location: Sequelize.STRING,
+        date: Sequelize.DATE,
         past: {
           type: Sequelize.VIRTUAL,
           get() {
@@ -17,16 +17,14 @@ class Meetup extends Model {
         },
       },
       {
-        sequelize: connection,
+        sequelize,
       }
     );
-
-    return this;
   }
 
   static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'file_id' });
     this.belongsTo(models.User, { foreignKey: 'user_id' });
-    this.belongsTo(models.File, { foreignKey: 'wallpaper_id' });
   }
 }
 
