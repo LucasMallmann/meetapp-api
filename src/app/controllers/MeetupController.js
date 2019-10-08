@@ -67,6 +67,12 @@ class MeetupController {
         .json({ error: 'You can only update meetups you created' });
     }
 
+    if (meetup.past) {
+      return res.status(400).json({
+        error: 'You cannot update past meetups',
+      });
+    }
+
     const { id, title, description, file_id } = await meetup.update(req.body);
 
     return res.json({
@@ -75,6 +81,41 @@ class MeetupController {
       description,
       file_id,
     });
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const meetup = await Meetup.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: 'user',
+        },
+      ],
+    });
+
+    if (!meetup) {
+      return res.status(400).json({ error: 'Meetup does not exist' });
+    }
+
+    const date = parseISO(meetup.date);
+
+    if (isBefore(date, new Date())) {
+      return res
+        .status(400)
+        .json({ error: 'You cannot cancel meetups that already happened' });
+    }
+
+    if (meetup.user.id !== req.userId) {
+      return res
+        .status(401)
+        .json({ error: 'You can only cancel your own meetups' });
+    }
+
+    await meetup.destroy();
+
+    return res.send();
   }
 }
 
