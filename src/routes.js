@@ -41,5 +41,6 @@ routes.post('/users', UserController.store);
  * Meetups Routes
  */
 routes.post('/meetups', MeetupController.store);
+routes.put('/meetups/:id', MeetupController.update);
 
 export default routes;
