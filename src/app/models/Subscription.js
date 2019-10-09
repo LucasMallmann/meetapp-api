@@ -1,14 +1,9 @@
-import Sequelize, { Model } from 'sequelize';
+import { Model } from 'sequelize';
 
 class Subscription extends Model {
   static init(sequelize) {
     super.init(
-      {
-        title: Sequelize.STRING,
-        description: Sequelize.STRING,
-        location: Sequelize.STRING,
-        date: Sequelize.DATE,
-      },
+      {},
       {
         sequelize,
       }
@@ -16,8 +11,8 @@ class Subscription extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.User, { foreignKey: 'file_id', as: 'wallpaper' });
-    this.hasMany(models.User, { foreignKey: 'user_id', as: 'user' });
+    this.belongsTo(models.Meetup, { foreignKey: 'meetup_id', as: 'meetup' });
+    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
   }
 }
 

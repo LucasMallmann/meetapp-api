@@ -10,6 +10,7 @@ import multerConfig from './config/multer';
 import FileController from './app/controllers/FileController';
 import MeetupController from './app/controllers/MeetupController';
 import OrganizingController from './app/controllers/OrganizingController';
+import SubscriptionController from './app/controllers/SubscriptionController';
 
 /** Multer */
 const upload = multer(multerConfig);
@@ -49,5 +50,10 @@ routes.delete('/meetups/:id', MeetupController.delete);
  * Organizing
  */
 routes.get('/organizing', OrganizingController.list);
+
+/**
+ * Subscription
+ */
+routes.post('/subscription/:meetupId', SubscriptionController.store);
 
 export default routes;

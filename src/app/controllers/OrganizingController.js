@@ -1,5 +1,6 @@
 import Meetup from '../models/Meetup';
 import File from '../models/File';
+import User from '../models/User';
 
 class OrganizingController {
   async list(req, res) {
@@ -12,6 +13,11 @@ class OrganizingController {
           model: File,
           as: 'wallpaper',
           attributes: ['id', 'url', 'path'],
+        },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name', 'email'],
         },
       ],
     });
