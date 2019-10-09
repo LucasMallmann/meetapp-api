@@ -15,8 +15,15 @@ class Mail {
   /**
    * Sends the message
    * @param {object} message
+   * @returns {Promise}
    */
-  sendMail(message) {}
+  sendMail(message) {
+    this.transporter.sendMail({
+      ...message,
+    });
+  }
+
+  configureTemplates() {}
 }
 
 export default new Mail();
