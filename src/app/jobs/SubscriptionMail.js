@@ -10,8 +10,9 @@ class SubscriptionMail {
    * @param {Object} data
    */
   async handle({ data }) {
-    const { organizer } = data;
-    await Mail.sendMail({});
+    // const { organizer } = data;
+    // await Mail.sendMail({});
+    console.log(data);
   }
 }
 
