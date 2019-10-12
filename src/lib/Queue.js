@@ -12,9 +12,14 @@ class Queue {
   }
 
   init() {
+    /**
+     * All tasks inside queues are called jobs
+     */
     jobs.forEach(job => {
       const { key, handle } = job;
-
+      /**
+       * Store the queue that has connection to Redis. Store also the handle, that is going to process the job
+       */
       this.queues[key] = {
         bee: new Bee(key, {
           redis: redisConfig,
@@ -27,16 +32,17 @@ class Queue {
   /**
    * Ads a new job to the queue
    * @param {string} key Unique key of the job
-   * @param {any} job Data (parameters) that it's going to pass to the handle function
+   * @param {any} jobData Data (parameters) that it's going to pass to the handle function
    */
-  add(key, job) {
-    return this.queues[key].bee.createJob(job).save();
+  add(key, jobData) {
+    return this.queues[key].bee.createJob(jobData).save();
   }
 
   processQueue() {
     jobs.forEach(job => {
       const { bee, handle } = this.queues[job.key];
-      bee.on('failure', this.handleFailure).process(handle);
+
+      bee.on('failed', this.handleFailure).process(handle);
     });
   }
 

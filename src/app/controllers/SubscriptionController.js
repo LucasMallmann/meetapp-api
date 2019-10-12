@@ -69,10 +69,10 @@ class SubscriptionController {
     //   template: 'subscription',
     // });
 
-    const subscription = await Subscription.create({
-      user_id: user.id,
-      meetup_id: meetup.id,
-    });
+    // const subscription = await Subscription.create({
+    //   user_id: user.id,
+    //   meetup_id: meetup.id,
+    // });
 
     return res.json('subscription');
   }

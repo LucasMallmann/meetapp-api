@@ -12,15 +12,16 @@ class SubscriptionMail {
   async handle({ data }) {
     const { user, organizer, meetup } = data;
 
-    await Mail.sendEmail({
+    // setTimeout(() => console.log(data), 2000);
+    await Mail.sendMail({
       to: 'Lucas Mallmann <lucasmallmann@email.com>',
       subject: 'Inscrição confirmada',
       template: 'subscription',
-      // context: {
-      //   organizer: organizer.name,
-      //   user: user.name,
-      //   meetup: meetup.title,
-      // },
+      context: {
+        organizer: organizer.name,
+        user: user.name,
+        meetup: meetup.title,
+      },
     });
   }
 }
