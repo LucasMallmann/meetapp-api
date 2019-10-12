@@ -3,6 +3,7 @@ import Subscription from '../models/Subscription';
 import User from '../models/User';
 import Queue from '../../lib/Queue';
 import SubscriptionMail from '../jobs/SubscriptionMail';
+import Mail from '../../lib/Mail';
 
 class SubscriptionController {
   async store(req, res) {
@@ -15,6 +16,10 @@ class SubscriptionController {
         },
       ],
     });
+
+    if (!meetup) {
+      return res.status(400).json({ error: 'This meeetup does not exist' });
+    }
 
     const user = await User.findByPk(req.userId);
 
@@ -52,17 +57,24 @@ class SubscriptionController {
     }
 
     /** TODO: Send the email */
+    await Queue.add(SubscriptionMail.key, {
+      user,
+      organizer: meetup.user,
+      meetup,
+    });
+
+    // await Mail.sendMail({
+    //   to: 'Lucas Mallmann <lucasmallmann@email.com>',
+    //   subject: 'Inscrição confirmada',
+    //   template: 'subscription',
+    // });
 
     const subscription = await Subscription.create({
       user_id: user.id,
       meetup_id: meetup.id,
     });
 
-    // Queue.add(SubscriptionMail.key, {
-    //   subscription,
-    // });
-
-    return res.json(subscription);
+    return res.json('subscription');
   }
 }
 

@@ -10,9 +10,18 @@ class SubscriptionMail {
    * @param {Object} data
    */
   async handle({ data }) {
-    // const { organizer } = data;
-    // await Mail.sendMail({});
-    console.log(data);
+    const { user, organizer, meetup } = data;
+
+    await Mail.sendEmail({
+      to: 'Lucas Mallmann <lucasmallmann@email.com>',
+      subject: 'Inscrição confirmada',
+      template: 'subscription',
+      // context: {
+      //   organizer: organizer.name,
+      //   user: user.name,
+      //   meetup: meetup.title,
+      // },
+    });
   }
 }
 

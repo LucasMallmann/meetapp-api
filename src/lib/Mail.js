@@ -14,6 +14,8 @@ class Mail {
       secure,
       auth,
     });
+
+    this.configureTemplates();
   }
 
   /**
@@ -22,7 +24,8 @@ class Mail {
    * @returns {Promise}
    */
   sendMail(message) {
-    this.transporter.sendMail({
+    return this.transporter.sendMail({
+      ...mailConfig.default,
       ...message,
     });
   }
